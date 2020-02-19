@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev_env
+  application:
+    name: userauthservice
+  cloud:
+    config:
+      uri: http://config:config@localhost:7001
+      

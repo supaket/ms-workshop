@@ -1,0 +1,64 @@
+<amexio-card [header]="true">
+    <amexio-header>
+        Orders
+    </amexio-header>
+    <amexio-body>
+        <amexio-row>
+            <amexio-column [size]=3>
+                Order Ref
+            </amexio-column>
+            <amexio-column [size]=3>
+                Order Date
+            </amexio-column>
+            <amexio-column [size]=3>
+                Total
+            </amexio-column>
+            <amexio-column [size]=3>
+                Status
+            </amexio-column>
+
+        </amexio-row>
+        <amexio-row *ngFor="let node of data">
+            <amexio-column [size]=3>
+                {{node.orderNo}}
+            </amexio-column>
+            <amexio-column [size]=3>
+                {{node.orderDate}}
+            </amexio-column>
+            <amexio-column [size]=3>
+                <ng-container *ngIf="!node.discountApplied">
+                    {{node.total}}
+                </ng-container>
+                <ng-container *ngIf="node.discountApplied">
+                    {{node.moneytoryValue.total}}
+                </ng-container>
+            </amexio-column>
+
+            <amexio-column [size]=3>
+                <ng-container *ngIf="node.status=='PAID'">
+                    <i class="fa fa-square green-color" aria-hidden="true" title="Your order successfully."></i> Successful
+                </ng-container>
+                <!-- <ng-container *ngIf="'node.status==PAYMENT_INITIATED'">
+                    <i class="fa fa-square yellow-color" aria-hidden="true" title="Order Initiated."></i> Order initiated
+
+                </ng-container> -->
+                <ng-container *ngIf="node.status=='PAYMENT_FAILURE'">
+                    <i class="fa fa-square red-color" aria-hidden="true" title="Your order is failed."></i> Payment failure
+                </ng-container>
+            </amexio-column>
+        </amexio-row>
+
+    </amexio-body>
+
+</amexio-card>
+<amexio-dialogue [show-dialogue]="showErrorDialog" (close)="close()" [custom]="true" [title]="'Error'" [type]="'error'">
+    <amexio-body>
+        <li style="text-align: left" *ngFor="let msg of msgData">
+            {{msg}}
+        </li>
+    </amexio-body>
+    <amexio-action>
+        <amexio-button type="primary" (onClick)="close()" [label]="'Ok'">
+        </amexio-button>
+    </amexio-action>
+</amexio-dialogue>
